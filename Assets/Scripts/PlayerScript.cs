@@ -1,11 +1,22 @@
 ﻿using UnityEngine;
 using Tobii.Gaming;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
     public Camera camera;
     public NavMeshAgent agent;
+    public Text candiesStatusText;
+
+    private int candiesAmount;
+    private int collectedCandiesAmount;
+
+    void Start()
+    {
+        candiesAmount = GameObject.FindGameObjectsWithTag("Candie").Length;
+        UpdateStatusText();
+    }
 
     // Update is called once per frame
     void Update()
@@ -18,5 +29,24 @@ public class PlayerScript : MonoBehaviour
         {
             agent.SetDestination(hit.point);
         }
+    }
+
+    void OnCollisionEnter()
+    {
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.tag == "Candie")
+        {
+            collectedCandiesAmount++;
+            UpdateStatusText();
+            Destroy(collider.gameObject);
+        }
+    }
+
+    private void UpdateStatusText()
+    {
+        candiesStatusText.text = collectedCandiesAmount + " / " + candiesAmount;
     }
 }

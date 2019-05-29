@@ -35,7 +35,7 @@ public class CandieSpawner : MonoBehaviour
                 {
                     if (prefab != null)
                     {
-                        Instantiate(prefab, position, Quaternion.identity);
+                        Instantiate(prefab, position, prefab.transform.rotation);
                     }
                     
                 }

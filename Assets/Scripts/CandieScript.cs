@@ -13,6 +13,6 @@ public class CandieScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(new Vector3(45, 30, 45) * Time.deltaTime);
     }
 }
