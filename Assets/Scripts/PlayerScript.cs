@@ -1,26 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Tobii.Gaming;
+using UnityEngine.AI;
 
 public class PlayerScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    public Camera camera;
+    public NavMeshAgent agent;
 
     // Update is called once per frame
     void Update()
     {
         var gazePoint = TobiiAPI.GetGazePoint();
-        Debug.Log("hi " + gazePoint.Screen);
-        //var ray = camera.ScreenPositionToRay(gazePoint.Screen);
+        var ray = camera.ScreenPointToRay(gazePoint.Screen);
+        RaycastHit hit;
 
-        //if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit))
         {
-            // do stuff.
+            agent.SetDestination(hit.point);
         }
     }
 }
