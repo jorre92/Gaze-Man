@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Candie
   - Ghost
+  - Obstacle
+  - Floor
   layers:
   - Default
   - TransparentFX

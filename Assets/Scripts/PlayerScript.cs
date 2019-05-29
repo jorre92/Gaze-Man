@@ -12,10 +12,13 @@ public class PlayerScript : MonoBehaviour
     public Text endGameText;
     public AudioClip eatAudioClip;
     public AudioClip endGameAudioClip;
+    public ParticleSystem splashParticleSystem;
+    public ParticleSystem endGameParticleSystem;
 
     private int candiesAmount;
     private int collectedCandiesAmount;
     private AudioSource audioSource;
+    private bool isEndGame;
 
     void Start()
     {
@@ -27,6 +30,11 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isEndGame)
+        {
+            return;
+        }
+
         var gazePoint = TobiiAPI.GetGazePoint();
         var ray = camera.ScreenPointToRay(gazePoint.Screen);
         RaycastHit hit;
@@ -37,10 +45,6 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter()
-    {
-    }
-
     void OnTriggerEnter(Collider collider)
     {
         if (collider.tag == "Candie")
@@ -48,6 +52,8 @@ public class PlayerScript : MonoBehaviour
             audioSource.PlayOneShot(eatAudioClip);
             collectedCandiesAmount++;
             UpdateStatusText();
+
+            splashParticleSystem.Play();
             Destroy(collider.gameObject);
         }
 
@@ -56,6 +62,9 @@ public class PlayerScript : MonoBehaviour
             audioSource.PlayOneShot(endGameAudioClip);
             endGameText.text = "You are dead!";
             Invoke("Restart", 3);
+
+            isEndGame = true;
+            endGameParticleSystem.Play();
         }
     }
 
