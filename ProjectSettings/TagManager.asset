@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Candie
+  - Ghost
   layers:
   - Default
   - TransparentFX
